@@ -46,12 +46,14 @@ public abstract class AbstractService<T, D, ID> {
                 .orElseThrow(() -> new RuntimeException("Entity not found"));
     }
 
+    @Transactional
     public D save(D dto) {
         T entity = toEntity(dto);
         T savedEntity = repository.save(entity);
         return toDTO(savedEntity);
     }
 
+    @Transactional
     public void deleteById(ID id) {
         repository.deleteById(id);
     }

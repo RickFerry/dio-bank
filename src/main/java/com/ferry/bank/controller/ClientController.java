@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -25,5 +22,16 @@ public class ClientController {
     @GetMapping("/{id}")
     public ResponseEntity<ClientDto> getClient(@PathVariable Long id) {
         return ResponseEntity.ok(clientService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<ClientDto> createClient(@RequestBody ClientDto clientDto) {
+        return ResponseEntity.ok(clientService.save(clientDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+        clientService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
