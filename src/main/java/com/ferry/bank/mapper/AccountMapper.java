@@ -5,11 +5,7 @@ import com.ferry.bank.model.dtos.AccountDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface AccountMapper {
-    Account toEntity(AccountDto accountDto);
-
-    AccountDto toDto(Account account);
-
+public interface AccountMapper extends EntityMapper<Account, AccountDto> {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Account partialUpdate(AccountDto accountDto, @MappingTarget Account account);
 }

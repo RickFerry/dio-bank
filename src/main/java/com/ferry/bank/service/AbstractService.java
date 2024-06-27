@@ -5,6 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Set;
+
 public abstract class AbstractService<T, D, ID> {
 
     protected final JpaRepository<T, ID> repository;
@@ -12,15 +15,23 @@ public abstract class AbstractService<T, D, ID> {
     private final Class<D> dtoClass;
     private final Class<T> entityClass;
 
+    protected abstract D toDTO(T entity);
+
+    protected abstract T toEntity(D dto);
+
+    protected abstract D toDto(T entity);
+
+    protected abstract List<T> toEntity(List<D> dtoList);
+
+    protected abstract List<D> toDto(List<T> entityList);
+
+    protected abstract Set<D> toDto(Set<T> entityList);
+
     protected AbstractService(JpaRepository<T, ID> repository, Class<D> dtoClass, Class<T> entityClass) {
         this.repository = repository;
         this.dtoClass = dtoClass;
         this.entityClass = entityClass;
     }
-
-    protected abstract D toDTO(T entity);
-
-    protected abstract T toEntity(D dto);
 
     @Transactional(readOnly = true)
     public Page<D> findAll(Pageable page) {

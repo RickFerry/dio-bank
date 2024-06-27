@@ -5,11 +5,7 @@ import com.ferry.bank.model.dtos.FeatureDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface FeatureMapper {
-    Feature toEntity(FeatureDto featureDto);
-
-    FeatureDto toDto(Feature feature);
-
+public interface FeatureMapper extends EntityMapper<Feature, FeatureDto> {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Feature partialUpdate(FeatureDto featureDto, @MappingTarget Feature feature);
 }
